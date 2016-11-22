@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>simple.js - example - rc-collapse@1.6.5</title>
+  <title>simple.js - example - @canner/rc-collapse@2.0.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -251,20 +251,26 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   <!--[if lt IE 9]>
   <script src="https://a.alipayobjects.com/??es5-shim/4.0.5/es5-shim.js,es5-shim/4.0.5/es5-sham.js,html5shiv/3.7.2/src/html5shiv.js"></script>
   <![endif]-->
+  <script src="https://as.alipayobjects.com/g/component/??modernizr/2.8.3/modernizr.js,fastclick/1.0.6/fastclick.js"></script>
+  <script>
+  if(!window.Promise) {
+    document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
+  }
+  </script>
   
-  <link rel="stylesheet" href="simple.css" />
 </head>
 
 <body>
   <div class="container">
     <div class="header">
-      <h1>rc-collapse@1.6.5</h1>
+      <h1>@canner/rc-collapse@2.0.0</h1>
 
       <p>rc-collapse ui component for react</p>
     </div>
     <div class="example" id="__react-content"></div>
 
-    <div class="highlight"><pre><code language="js"><span class="hljs-keyword">import</span> <span class="hljs-string">'rc-collapse/assets/index.css'</span>;
+    <div class="highlight"><pre><code language="js"><span class="hljs-comment">/* eslint-disable no-console */</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'rc-collapse/assets/index.less'</span>;
 <span class="hljs-keyword">import</span> <span class="hljs-string">'string.prototype.repeat'</span>;
 <span class="hljs-keyword">import</span> Collapse, { Panel } <span class="hljs-keyword">from</span> <span class="hljs-string">'rc-collapse'</span>;
 <span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
@@ -295,6 +301,10 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     });
   },
 
+  onDrag(e, data) {
+    <span class="hljs-built_in">console</span>.log(data, <span class="hljs-string">'dragging'</span>);
+  },
+
   getItems() {
     <span class="hljs-keyword">const</span> items = [];
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>, len = <span class="hljs-number">3</span>; i &lt; len; i++) {
@@ -307,8 +317,14 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     }
     items.push(
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Panel</span> <span class="hljs-attribute">header</span>=<span class="hljs-value">{`This</span> <span class="hljs-attribute">is</span> <span class="hljs-attribute">panel</span> <span class="hljs-attribute">header</span> <span class="hljs-attribute">4</span>`} <span class="hljs-attribute">key</span>=<span class="hljs-value">"4"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">Collapse</span> <span class="hljs-attribute">defaultActiveKey</span>=<span class="hljs-value">"1"</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-title">Panel</span> <span class="hljs-attribute">header</span>=<span class="hljs-value">{`This</span> <span class="hljs-attribute">is</span> <span class="hljs-attribute">panel</span> <span class="hljs-attribute">nest</span> <span class="hljs-attribute">panel</span>`} <span class="hljs-attribute">key</span>=<span class="hljs-value">"1"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">Collapse</span> <span class="hljs-attribute">defaultActiveKey</span>=<span class="hljs-value">"1"</span> <span class="hljs-attribute">drag</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">Panel</span> <span class="hljs-attribute">header</span>=<span class="hljs-value">{`This</span> <span class="hljs-attribute">is</span> <span class="hljs-attribute">panel</span> <span class="hljs-attribute">nest</span> <span class="hljs-attribute">panel</span> <span class="hljs-attribute">1</span>`} <span class="hljs-attribute">key</span>=<span class="hljs-value">"1"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>{text}<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-title">Panel</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">Panel</span> <span class="hljs-attribute">header</span>=<span class="hljs-value">{`This</span> <span class="hljs-attribute">is</span> <span class="hljs-attribute">panel</span> <span class="hljs-attribute">nest</span> <span class="hljs-attribute">panel</span> <span class="hljs-attribute">2</span>`} <span class="hljs-attribute">key</span>=<span class="hljs-value">"2"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>{text}<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-title">Panel</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-title">Panel</span> <span class="hljs-attribute">header</span>=<span class="hljs-value">{`This</span> <span class="hljs-attribute">is</span> <span class="hljs-attribute">panel</span> <span class="hljs-attribute">nest</span> <span class="hljs-attribute">panel</span> <span class="hljs-attribute">3</span>`} <span class="hljs-attribute">key</span>=<span class="hljs-value">"3"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>{text}<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
           <span class="hljs-tag">&lt;/<span class="hljs-title">Panel</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-title">Collapse</span>&gt;</span>
@@ -336,6 +352,14 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
     });
   },
 
+  dragStart(e, data) {
+    <span class="hljs-built_in">console</span>.log(data, <span class="hljs-string">'start'</span>);
+  },
+
+  dragStop(e, data) {
+    <span class="hljs-built_in">console</span>.log(data, <span class="hljs-string">'stop'</span>);
+  },
+
   render() {
     <span class="hljs-keyword">const</span> accordion = <span class="hljs-keyword">this</span>.state.accordion;
     <span class="hljs-keyword">const</span> btn = accordion ? <span class="hljs-string">'accordion'</span> : <span class="hljs-string">'collapse'</span>;
@@ -347,6 +371,11 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
       <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.setActivityKey}</span>&gt;</span>active header 2<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">Collapse</span>
+        <span class="hljs-attribute">drag</span>
+        <span class="hljs-attribute">time</span>=<span class="hljs-value">{this.state.time}</span>
+        <span class="hljs-attribute">dragStart</span>=<span class="hljs-value">{this.dragStart}</span>
+        <span class="hljs-attribute">onDrag</span>=<span class="hljs-value">{this.onDrag}</span>
+        <span class="hljs-attribute">dragStop</span>=<span class="hljs-value">{this.dragStop}</span>
         <span class="hljs-attribute">accordion</span>=<span class="hljs-value">{accordion}</span>
         <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.onChange}</span>
         <span class="hljs-attribute">activeKey</span>=<span class="hljs-value">{activeKey}</span>
@@ -366,7 +395,7 @@ ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-t
          alt="Fork me on GitHub"
          data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
   </a>
-  
+  <script>FastClick.attach(document.body);</script>
   <script src="common.js?nowrap"></script>
   <script src="simple.js?nowrap"></script>
 </body>
