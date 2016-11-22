@@ -64,36 +64,60 @@ ReactDOM.render(collapse, container);
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
-        <th style="width: 100px;">name</th>
-        <th style="width: 50px;">type</th>
-        <th>default</th>
-        <th>description</th>
+      <th style="width: 100px;">name</th>
+      <th style="width: 50px;">type</th>
+      <th>default</th>
+      <th>description</th>
     </tr>
     </thead>
     <tbody>
       <tr>
-          <td>activeKey</td>
-          <td>Array<String>|String</td>
-          <th>The first panel key</th>
-          <td>current active Panel key</td>
+        <td>activeKey</td>
+        <td>Array<String>|String</td>
+        <th>The first panel key</th>
+        <td>current active Panel key</td>
       </tr>
       <tr>
-          <td>defaultActiveKey</td>
-          <td>Array<String>|String</td>
-          <th>null</th>
-          <td>default active key</td>
+        <td>drag</td>
+        <td>Boolean</td>
+        <td></td>
+        <td>enable draggable functions</td>
       </tr>
       <tr>
-          <td>accordion</td>
-          <td>Boolean</td>
-          <th>false</th>
-          <td>accordion mode, default is null, is collapse mode</td>
+        <td>defaultActiveKey</td>
+        <td>Array<String>|String</td>
+        <th>null</th>
+        <td>default active key</td>
       </tr>
       <tr>
-          <td>onChange</td>
-          <td>Function(key)</td>
-          <th>noop</th>
-          <td>called when collapse Panel is changed</td>
+        <td>accordion</td>
+        <td>Boolean</td>
+        <th>false</th>
+        <td>accordion mode, default is null, is collapse mode</td>
+      </tr>
+      <tr>
+        <td>onChange</td>
+        <td>Function(key)</td>
+        <th>noop</th>
+        <td>called when collapse Panel is changed</td>
+      </tr>
+      <tr>
+        <td>dragStart</td>
+        <td>Function (e, data)</td>
+        <th>noop</th>
+        <td>if drag is enabled, this function will be called once the tab start dragging</td>
+      </tr>
+      <tr>
+        <td>onDrag</td>
+        <td>Function (e, data)</td>
+        <th>noop</th>
+        <td>if drag is enabled, this function will be called once the tab on dragging</td>
+      </tr>
+      <tr>
+        <td>dragStop</td>
+        <td>Function (e, data)</td>
+        <th>noop</th>
+        <td>if drag is enabled, this function will be called once the tab stop dragging</td>
       </tr>
     </tbody>
 </table>
@@ -111,28 +135,28 @@ item.
 #### props
 
 <table class="table table-bordered table-striped">
-    <thead>
+  <thead>
     <tr>
-        <th style="width: 100px;">name</th>
-        <th style="width: 50px;">type</th>
-        <th>default</th>
-        <th>description</th>
+      <th style="width: 100px;">name</th>
+      <th style="width: 50px;">type</th>
+      <th>default</th>
+      <th>description</th>
     </tr>
-    </thead>
-    <tbody>
-      <tr>
-          <td>header</td>
-          <td>String or node</td>
-          <th></th>
-          <td>header content of Panel</td>
-      </tr>
-       <tr>
-            <td>className</td>
-            <td>String or object</td>
-            <th></th>
-            <td>custom className to apply</td>
-        </tr>
-    </tbody>
+  </thead>
+  <tbody>
+    <tr>
+      <td>header</td>
+      <td>String or node</td>
+      <th></th>
+      <td>header content of Panel</td>
+    </tr>
+    <tr>
+      <td>className</td>
+      <td>String or object</td>
+      <th></th>
+      <td>custom className to apply</td>
+    </tr>
+  </tbody>
 </table>
 
 #### key
