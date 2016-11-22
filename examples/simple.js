@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import 'rc-collapse/assets/index.less';
 import 'string.prototype.repeat';
 import Collapse, { Panel } from 'rc-collapse';
@@ -29,6 +30,10 @@ const Test = React.createClass({
     });
   },
 
+  onDrag(e, data) {
+    console.log(data, 'dragging');
+  },
+
   getItems() {
     const items = [];
     for (let i = 0, len = 3; i < len; i++) {
@@ -41,8 +46,14 @@ const Test = React.createClass({
     }
     items.push(
       <Panel header={`This is panel header 4`} key="4">
-        <Collapse defaultActiveKey="1">
-          <Panel header={`This is panel nest panel`} key="1">
+        <Collapse defaultActiveKey="1" drag>
+          <Panel header={`This is panel nest panel 1`} key="1">
+            <p>{text}</p>
+          </Panel>
+          <Panel header={`This is panel nest panel 2`} key="2">
+            <p>{text}</p>
+          </Panel>
+          <Panel header={`This is panel nest panel 3`} key="3">
             <p>{text}</p>
           </Panel>
         </Collapse>
@@ -70,6 +81,14 @@ const Test = React.createClass({
     });
   },
 
+  dragStart(e, data) {
+    console.log(data, 'start');
+  },
+
+  dragStop(e, data) {
+    console.log(data, 'stop');
+  },
+
   render() {
     const accordion = this.state.accordion;
     const btn = accordion ? 'accordion' : 'collapse';
@@ -81,6 +100,11 @@ const Test = React.createClass({
       <button onClick={this.setActivityKey}>active header 2</button>
       <br/><br/>
       <Collapse
+        drag
+        time={this.state.time}
+        dragStart={this.dragStart}
+        onDrag={this.onDrag}
+        dragStop={this.dragStop}
         accordion={accordion}
         onChange={this.onChange}
         activeKey={activeKey}
