@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import 'rc-collapse/assets/index.less';
+import '@canner/rc-collapse/assets/index.less';
 import 'string.prototype.repeat';
-import Collapse, { Panel } from 'rc-collapse';
+import Collapse, { Panel } from '@canner/rc-collapse';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
