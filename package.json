@@ -59,6 +59,7 @@
     "lodash.isequal": "^4.4.0",
     "rc-animate": "2.x",
     "react-draggable": "^2.2.3",
+    "react-icons": "^2.2.1",
     "shallowequal": "^0.2.2"
   }
 }

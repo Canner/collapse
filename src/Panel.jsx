@@ -4,6 +4,7 @@ import { DraggableCore } from 'react-draggable';
 import PanelContent from './PanelContent';
 import { createCSSTransform } from './utils';
 import Animate from 'rc-animate';
+import SwapVertical from 'react-icons/lib/md/swap-vert';
 
 const CollapsePanel = React.createClass({
   propTypes: {
@@ -132,6 +133,7 @@ const CollapsePanel = React.createClass({
         }
         {drag ? (
             <DraggableCore
+              handle=".swap"
               zIndex={100}
               onStart={this.handleStart}
               onDrag={this.handleDrag}
@@ -146,6 +148,7 @@ const CollapsePanel = React.createClass({
               >
                 <i className="arrow"></i>
                 {header}
+                <SwapVertical className="swap"/>
               </div>
             </DraggableCore>
           ) : (
