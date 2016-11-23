@@ -279,7 +279,7 @@ webpackJsonp([0,1],[
 	
 	var _Panel2 = _interopRequireDefault(_Panel);
 	
-	var _openAnimationFactory = __webpack_require__(201);
+	var _openAnimationFactory = __webpack_require__(203);
 	
 	var _openAnimationFactory2 = _interopRequireDefault(_openAnimationFactory);
 	
@@ -287,7 +287,7 @@ webpackJsonp([0,1],[
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _shallowequal = __webpack_require__(202);
+	var _shallowequal = __webpack_require__(204);
 	
 	var _shallowequal2 = _interopRequireDefault(_shallowequal);
 	
@@ -1076,7 +1076,7 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 12 */
-[207, 13],
+[209, 13],
 /* 13 */
 /***/ function(module, exports) {
 
@@ -4442,6 +4442,10 @@ webpackJsonp([0,1],[
 	
 	var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 	
+	var _swapVert = __webpack_require__(201);
+	
+	var _swapVert2 = _interopRequireDefault(_swapVert);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -4569,6 +4573,7 @@ webpackJsonp([0,1],[
 	      drag ? _react2.default.createElement(
 	        _reactDraggable.DraggableCore,
 	        {
+	          handle: '.swap',
 	          zIndex: 100,
 	          onStart: this.handleStart,
 	          onDrag: this.handleDrag,
@@ -4584,7 +4589,8 @@ webpackJsonp([0,1],[
 	            'aria-expanded': isActive
 	          },
 	          _react2.default.createElement('i', { className: 'arrow' }),
-	          header
+	          header,
+	          _react2.default.createElement(_swapVert2.default, { className: 'swap' })
 	        )
 	      ) : _react2.default.createElement(
 	        'div',
@@ -8605,7 +8611,7 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 59 */
-[207, 44],
+[209, 44],
 /* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -26248,6 +26254,118 @@ webpackJsonp([0,1],[
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(7);
+	var IconBase = __webpack_require__(202);
+	
+	var MdSwapVert = function (_React$Component) {
+	    _inherits(MdSwapVert, _React$Component);
+	
+	    function MdSwapVert() {
+	        _classCallCheck(this, MdSwapVert);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(MdSwapVert).apply(this, arguments));
+	    }
+	
+	    _createClass(MdSwapVert, [{
+	        key: 'render',
+	        value: function render() {
+	            return React.createElement(
+	                IconBase,
+	                _extends({ viewBox: '0 0 40 40' }, this.props),
+	                React.createElement(
+	                    'g',
+	                    null,
+	                    React.createElement('path', { d: 'm15 5l6.6 6.6h-5v11.8h-3.2v-11.8h-5z m11.6 23.4h5l-6.6 6.6-6.6-6.6h5v-11.8h3.2v11.8z' })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return MdSwapVert;
+	}(React.Component);
+	
+	exports.default = MdSwapVert;
+	module.exports = exports['default'];
+
+/***/ },
+/* 202 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(7);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+	
+	var IconBase = function IconBase(_ref, _ref2) {
+	  var children = _ref.children;
+	  var color = _ref.color;
+	  var size = _ref.size;
+	  var style = _ref.style;
+	
+	  var props = _objectWithoutProperties(_ref, ['children', 'color', 'size', 'style']);
+	
+	  var _ref2$reactIconBase = _ref2.reactIconBase;
+	  var reactIconBase = _ref2$reactIconBase === undefined ? {} : _ref2$reactIconBase;
+	
+	  var computedSize = size || reactIconBase.size || '1em';
+	  return _react2.default.createElement('svg', _extends({
+	    children: children,
+	    fill: 'currentColor',
+	    preserveAspectRatio: 'xMidYMid meet',
+	    height: computedSize,
+	    width: computedSize
+	  }, reactIconBase, props, {
+	    style: _extends({
+	      verticalAlign: 'middle',
+	      color: color || reactIconBase.color
+	    }, reactIconBase.style || {}, style)
+	  }));
+	};
+	
+	IconBase.propTypes = {
+	  color: _react.PropTypes.string,
+	  size: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	  style: _react.PropTypes.object
+	};
+	
+	IconBase.contextTypes = {
+	  reactIconBase: _react.PropTypes.shape(IconBase.propTypes)
+	};
+	
+	exports.default = IconBase;
+	module.exports = exports['default'];
+
+/***/ },
+/* 203 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
@@ -26293,12 +26411,12 @@ webpackJsonp([0,1],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 202 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var fetchKeys = __webpack_require__(203);
+	var fetchKeys = __webpack_require__(205);
 	
 	module.exports = function shallowEqual(objA, objB, compare, compareContext) {
 	
@@ -26346,7 +26464,7 @@ webpackJsonp([0,1],[
 	};
 
 /***/ },
-/* 203 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26357,9 +26475,9 @@ webpackJsonp([0,1],[
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var getNative = __webpack_require__(204),
-	    isArguments = __webpack_require__(205),
-	    isArray = __webpack_require__(206);
+	var getNative = __webpack_require__(206),
+	    isArguments = __webpack_require__(207),
+	    isArray = __webpack_require__(208);
 	
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
@@ -26588,7 +26706,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 204 */
+/* 206 */
 /***/ function(module, exports) {
 
 	/**
@@ -26731,7 +26849,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 205 */
+/* 207 */
 /***/ function(module, exports) {
 
 	/**
@@ -26966,7 +27084,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 206 */
+/* 208 */
 /***/ function(module, exports) {
 
 	/**
@@ -27152,7 +27270,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 207 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**

@@ -33,6 +33,10 @@
   vertical-align: middle;
   margin-right: 8px;
 }
+.rc-collapse > .rc-collapse-item > .rc-collapse-header .swap {
+  float: right;
+  padding: 10px;
+}
 .rc-collapse-content {
   overflow: hidden;
   color: #666;

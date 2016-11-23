@@ -7,7 +7,7 @@
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet"/>
-  <title>@canner/rc-collapse@2.0.0 - rc-collapse ui component for react</title>
+  <title>@canner/rc-collapse@2.1.0 - rc-collapse ui component for react</title>
   <style>
     @font-face {
       font-family: octicons-anchor;
@@ -737,7 +737,7 @@
 
 <body>
 <div class="header">
-  <h1>@canner/rc-collapse@2.0.0</h1>
+  <h1>@canner/rc-collapse@2.1.0</h1>
 </div>
 <div class="examples">
   <h3>EXAMPLES</h3>
@@ -778,36 +778,60 @@ npm start</code></pre></div><h2>Example<a id="user-content-example" name="exampl
 ReactDOM.render(collapse, container);</code></pre></div><h2>API<a id="user-content-api" name="api" class="anchor" aria-hidden="true" href="#api"><span class="octicon octicon-link"></span></a></h2><h3>Collapse<a id="user-content-collapse" name="collapse" class="anchor" aria-hidden="true" href="#collapse"><span class="octicon octicon-link"></span></a></h3><h4>props:<a id="user-content-props:" name="props:" class="anchor" aria-hidden="true" href="#props:"><span class="octicon octicon-link"></span></a></h4><table class="table table-bordered table-striped">
     <thead>
     <tr>
-        <th style="width: 100px;">name</th>
-        <th style="width: 50px;">type</th>
-        <th>default</th>
-        <th>description</th>
+      <th style="width: 100px;">name</th>
+      <th style="width: 50px;">type</th>
+      <th>default</th>
+      <th>description</th>
     </tr>
     </thead>
     <tbody>
       <tr>
-          <td>activeKey</td>
-          <td>Array<String>|String</td>
-          <th>The first panel key</th>
-          <td>current active Panel key</td>
+        <td>activeKey</td>
+        <td>Array<String>|String</td>
+        <th>The first panel key</th>
+        <td>current active Panel key</td>
       </tr>
       <tr>
-          <td>defaultActiveKey</td>
-          <td>Array<String>|String</td>
-          <th>null</th>
-          <td>default active key</td>
+        <td>drag</td>
+        <td>Boolean</td>
+        <td></td>
+        <td>enable draggable functions</td>
       </tr>
       <tr>
-          <td>accordion</td>
-          <td>Boolean</td>
-          <th>false</th>
-          <td>accordion mode, default is null, is collapse mode</td>
+        <td>defaultActiveKey</td>
+        <td>Array<String>|String</td>
+        <th>null</th>
+        <td>default active key</td>
       </tr>
       <tr>
-          <td>onChange</td>
-          <td>Function(key)</td>
-          <th>noop</th>
-          <td>called when collapse Panel is changed</td>
+        <td>accordion</td>
+        <td>Boolean</td>
+        <th>false</th>
+        <td>accordion mode, default is null, is collapse mode</td>
+      </tr>
+      <tr>
+        <td>onChange</td>
+        <td>Function(key)</td>
+        <th>noop</th>
+        <td>called when collapse Panel is changed</td>
+      </tr>
+      <tr>
+        <td>dragStart</td>
+        <td>Function (e, data)</td>
+        <th>noop</th>
+        <td>if drag is enabled, this function will be called once the tab start dragging</td>
+      </tr>
+      <tr>
+        <td>onDrag</td>
+        <td>Function (e, data)</td>
+        <th>noop</th>
+        <td>if drag is enabled, this function will be called once the tab on dragging</td>
+      </tr>
+      <tr>
+        <td>dragStop</td>
+        <td>Function (e, data)</td>
+        <th>noop</th>
+        <td>if drag is enabled, this function will be called once the tab stop dragging</td>
       </tr>
     </tbody>
 </table>
@@ -819,28 +843,28 @@ array, and the only item is the activeKey string provided.</p>
 <code>activeKey</code> should be an string, but array is support too, just use the first
 item.</p>
 <h3>Collapse.Panel<a id="user-content-collapse.panel" name="collapse.panel" class="anchor" aria-hidden="true" href="#collapse.panel"><span class="octicon octicon-link"></span></a></h3><h4>props<a id="user-content-props" name="props" class="anchor" aria-hidden="true" href="#props"><span class="octicon octicon-link"></span></a></h4><table class="table table-bordered table-striped">
-    <thead>
+  <thead>
     <tr>
-        <th style="width: 100px;">name</th>
-        <th style="width: 50px;">type</th>
-        <th>default</th>
-        <th>description</th>
+      <th style="width: 100px;">name</th>
+      <th style="width: 50px;">type</th>
+      <th>default</th>
+      <th>description</th>
     </tr>
-    </thead>
-    <tbody>
-      <tr>
-          <td>header</td>
-          <td>String or node</td>
-          <th></th>
-          <td>header content of Panel</td>
-      </tr>
-       <tr>
-            <td>className</td>
-            <td>String or object</td>
-            <th></th>
-            <td>custom className to apply</td>
-        </tr>
-    </tbody>
+  </thead>
+  <tbody>
+    <tr>
+      <td>header</td>
+      <td>String or node</td>
+      <th></th>
+      <td>header content of Panel</td>
+    </tr>
+    <tr>
+      <td>className</td>
+      <td>String or object</td>
+      <th></th>
+      <td>custom className to apply</td>
+    </tr>
+  </tbody>
 </table>
 
 <h4>key<a id="user-content-key" name="key" class="anchor" aria-hidden="true" href="#key"><span class="octicon octicon-link"></span></a></h4><p>If <code>key</code> is not provided, the panel&#39;s index will be used instead.</p>
