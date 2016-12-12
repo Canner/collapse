@@ -119,6 +119,12 @@ ReactDOM.render(collapse, container);
         <th>noop</th>
         <td>if drag is enabled, this function will be called once the tab stop dragging</td>
       </tr>
+      <tr>
+        <td>onSwap</td>
+        <td>Function (fromIndex, toIndex)</td>
+        <th>noop</th>
+        <td>when data is swapped</td>
+      </tr>
     </tbody>
 </table>
 

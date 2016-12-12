@@ -34,6 +34,7 @@ const Collapse = React.createClass({
     accordion: PropTypes.bool,
     className: PropTypes.string,
     style: PropTypes.object,
+    onSwap: PropTypes.func,
   },
 
   statics: {
@@ -49,6 +50,7 @@ const Collapse = React.createClass({
       dragStop: arg => arg,
       dragStart: arg => arg,
       onDrag: arg => arg,
+      onSwap: arg => arg,
     };
   },
 
@@ -172,6 +174,7 @@ const Collapse = React.createClass({
       const tmp = newChildren[fromIndex];
       newChildren[fromIndex] = newChildren[toIndex];
       newChildren[toIndex] = tmp;
+      this.props.onSwap(fromIndex, toIndex);
     }
 
     this.setState({

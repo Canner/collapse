@@ -34,6 +34,10 @@ const Test = React.createClass({
     console.log(data, 'dragging');
   },
 
+  onSwap(fromIndex, toIndex) {
+    console.log(fromIndex, toIndex);
+  },
+
   getItems() {
     const items = [];
     for (let i = 0, len = 3; i < len; i++) {
@@ -104,6 +108,7 @@ const Test = React.createClass({
         time={this.state.time}
         dragStart={this.dragStart}
         onDrag={this.onDrag}
+        onSwap={this.onSwap}
         dragStop={this.dragStop}
         accordion={accordion}
         onChange={this.onChange}
