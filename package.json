@@ -1,6 +1,6 @@
 {
   "name": "@canner/rc-collapse",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "rc-collapse ui component for react",
   "keywords": [
     "react",
@@ -59,7 +59,6 @@
     "lodash.isequal": "^4.4.0",
     "rc-animate": "2.x",
     "react-draggable": "^2.2.3",
-    "react-icons": "^2.2.1",
-    "shallowequal": "^0.2.2"
+    "react-icons": "^2.2.1"
   }
 }

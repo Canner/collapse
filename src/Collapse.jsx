@@ -1,9 +1,8 @@
+/* eslint-disable max-len */
 import React, { PropTypes, Children }from 'react';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
 import classNames from 'classnames';
-import shallowEqual from 'shallowequal';
-import { childrenEqual } from './utils';
 
 function toArray(activeKey) {
   let currentActiveKey = activeKey;
@@ -85,16 +84,18 @@ const Collapse = React.createClass({
   },
 
   componentWillUpdate(nextProps, nextState) {
-    if (
-      !shallowEqual(nextProps, this.props)
-      || !shallowEqual(nextState.activeKey, this.state.activeKey)
-      || !shallowEqual(nextState.openAnimation, this.state.openAnimation)
-      || !childrenEqual(this.props.children, nextProps.children)
-    ) {
-      this.setState({
-        children: this.getItems(nextState.activeKey, nextState.openAnimation),
-      });
-    }
+    // if (
+    //   !shallowEqual(nextProps, this.props)
+    //   || !shallowEqual(nextState.activeKey, this.state.activeKey)
+    //   || !shallowEqual(nextState.openAnimation, this.state.openAnimation)
+    //   || !childrenEqual(this.props.children, nextProps.children)
+    // ) {
+    // NOTE: update state everytime for now, need to optimize. But the problem is when should it be updated?
+    // because this should compare the data fields in Panels, which we used in generating qa inside.
+    this.setState({
+      children: this.getItems(nextState.activeKey, nextState.openAnimation),
+    });
+    // }
   },
 
   onClickItem(key) {
