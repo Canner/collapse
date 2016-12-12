@@ -53,6 +53,9 @@ webpackJsonp([0,1],[
 	  onDrag: function onDrag(e, data) {
 	    console.log(data, 'dragging');
 	  },
+	  onSwap: function onSwap(fromIndex, toIndex) {
+	    console.log(fromIndex, toIndex);
+	  },
 	  getItems: function getItems() {
 	    var items = [];
 	    for (var i = 0, len = 3; i < len; i++) {
@@ -159,6 +162,7 @@ webpackJsonp([0,1],[
 	          time: this.state.time,
 	          dragStart: this.dragStart,
 	          onDrag: this.onDrag,
+	          onSwap: this.onSwap,
 	          dragStop: this.dragStop,
 	          accordion: accordion,
 	          onChange: this.onChange,
@@ -323,7 +327,8 @@ webpackJsonp([0,1],[
 	    onChange: _react.PropTypes.func,
 	    accordion: _react.PropTypes.bool,
 	    className: _react.PropTypes.string,
-	    style: _react.PropTypes.object
+	    style: _react.PropTypes.object,
+	    onSwap: _react.PropTypes.func
 	  },
 	
 	  statics: {
@@ -343,6 +348,9 @@ webpackJsonp([0,1],[
 	        return arg;
 	      },
 	      onDrag: function onDrag(arg) {
+	        return arg;
+	      },
+	      onSwap: function onSwap(arg) {
 	        return arg;
 	      }
 	    };
@@ -474,6 +482,7 @@ webpackJsonp([0,1],[
 	      var tmp = newChildren[fromIndex];
 	      newChildren[fromIndex] = newChildren[toIndex];
 	      newChildren[toIndex] = tmp;
+	      this.props.onSwap(fromIndex, toIndex);
 	    }
 	
 	    this.setState({

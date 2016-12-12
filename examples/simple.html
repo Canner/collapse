@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>simple.js - example - @canner/rc-collapse@2.1.0</title>
+  <title>simple.js - example - @canner/rc-collapse@2.2.0</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>@canner/rc-collapse@2.1.0</h1>
+      <h1>@canner/rc-collapse@2.2.0</h1>
 
       <p>rc-collapse ui component for react</p>
     </div>
@@ -303,6 +303,10 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 
   onDrag(e, data) {
     <span class="hljs-built_in">console</span>.log(data, <span class="hljs-string">'dragging'</span>);
+  },
+
+  onSwap(fromIndex, toIndex) {
+    <span class="hljs-built_in">console</span>.log(fromIndex, toIndex);
   },
 
   getItems() {
@@ -375,6 +379,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
         <span class="hljs-attribute">time</span>=<span class="hljs-value">{this.state.time}</span>
         <span class="hljs-attribute">dragStart</span>=<span class="hljs-value">{this.dragStart}</span>
         <span class="hljs-attribute">onDrag</span>=<span class="hljs-value">{this.onDrag}</span>
+        <span class="hljs-attribute">onSwap</span>=<span class="hljs-value">{this.onSwap}</span>
         <span class="hljs-attribute">dragStop</span>=<span class="hljs-value">{this.dragStop}</span>
         <span class="hljs-attribute">accordion</span>=<span class="hljs-value">{accordion}</span>
         <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.onChange}</span>
