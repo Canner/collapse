@@ -291,12 +291,21 @@ webpackJsonp([0,1],[
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
+	var _shallowequal = __webpack_require__(204);
+	
+	var _shallowequal2 = _interopRequireDefault(_shallowequal);
+	
+	var _deepEqual = __webpack_require__(209);
+	
+	var _deepEqual2 = _interopRequireDefault(_deepEqual);
+	
+	var _utils = __webpack_require__(188);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } /* eslint-disable max-len */
-	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
 	function toArray(activeKey) {
 	  var currentActiveKey = activeKey;
@@ -323,7 +332,8 @@ webpackJsonp([0,1],[
 	    accordion: _react.PropTypes.bool,
 	    className: _react.PropTypes.string,
 	    style: _react.PropTypes.object,
-	    onSwap: _react.PropTypes.func
+	    onSwap: _react.PropTypes.func,
+	    cannerJSON: _react.PropTypes.object
 	  },
 	
 	  statics: {
@@ -368,30 +378,23 @@ webpackJsonp([0,1],[
 	    };
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    if ('activeKey' in nextProps) {
+	    if (!(0, _shallowequal2.default)(nextProps.activeKey, this.props.activeKey)) {
 	      this.setState({
 	        activeKey: toArray(nextProps.activeKey)
 	      });
 	    }
-	    if ('openAnimation' in nextProps) {
+	    if (!(0, _shallowequal2.default)(nextProps.openAnimation, this.props.openAnimation)) {
 	      this.setState({
 	        openAnimation: nextProps.openAnimation
 	      });
 	    }
 	  },
 	  componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
-	    // if (
-	    //   !shallowEqual(nextProps, this.props)
-	    //   || !shallowEqual(nextState.activeKey, this.state.activeKey)
-	    //   || !shallowEqual(nextState.openAnimation, this.state.openAnimation)
-	    //   || !childrenEqual(this.props.children, nextProps.children)
-	    // ) {
-	    // NOTE: update state everytime for now, need to optimize. But the problem is when should it be updated?
-	    // because this should compare the data fields in Panels, which we used in generating qa inside.
-	    this.setState({
-	      children: this.getItems(nextState.activeKey, nextState.openAnimation)
-	    });
-	    // }
+	    if (!(0, _shallowequal2.default)(nextState.activeKey, this.state.activeKey) || !(0, _utils.childrenEqual)(this.props.children, nextProps.children) || !(0, _deepEqual2.default)(nextProps.cannerJSON, this.props.cannerJSON)) {
+	      this.setState({
+	        children: this.getItems(nextState.activeKey, nextState.openAnimation)
+	      });
+	    }
 	  },
 	  onClickItem: function onClickItem(key) {
 	    var _this = this;
@@ -469,12 +472,12 @@ webpackJsonp([0,1],[
 	    this.props.onChange(this.props.accordion ? activeKey[0] : activeKey);
 	  },
 	  swapPanel: function swapPanel(fromKey, toKey) {
-	    var children = this.state.children;
-	    // create new array for children.
-	
-	    var newChildren = children.slice();
-	
 	    if (fromKey && toKey) {
+	      var children = this.state.children;
+	      // create new array for children.
+	
+	      var newChildren = children.slice();
+	
 	      var fromIndex = children.findIndex(function (child) {
 	        return child.props.dataKey === fromKey;
 	      });
@@ -485,11 +488,10 @@ webpackJsonp([0,1],[
 	      newChildren[fromIndex] = newChildren[toIndex];
 	      newChildren[toIndex] = tmp;
 	      this.props.onSwap(fromIndex, toIndex);
+	      this.setState({
+	        children: newChildren
+	      });
 	    }
-	
-	    this.setState({
-	      children: newChildren
-	    });
 	  },
 	  render: function render() {
 	    var _classNames;
@@ -1087,7 +1089,7 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 12 */
-[204, 13],
+[212, 13],
 /* 13 */
 /***/ function(module, exports) {
 
@@ -8622,7 +8624,7 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 59 */
-[204, 44],
+[212, 44],
 /* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -26423,6 +26425,1006 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 204 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var fetchKeys = __webpack_require__(205);
+	
+	module.exports = function shallowEqual(objA, objB, compare, compareContext) {
+	
+	    var ret = compare ? compare.call(compareContext, objA, objB) : void 0;
+	
+	    if (ret !== void 0) {
+	        return !!ret;
+	    }
+	
+	    if (objA === objB) {
+	        return true;
+	    }
+	
+	    if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+	        return false;
+	    }
+	
+	    var keysA = fetchKeys(objA);
+	    var keysB = fetchKeys(objB);
+	
+	    var len = keysA.length;
+	    if (len !== keysB.length) {
+	        return false;
+	    }
+	
+	    compareContext = compareContext || null;
+	
+	    // Test for A's keys different from B.
+	    var bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
+	    for (var i = 0; i < len; i++) {
+	        var key = keysA[i];
+	        if (!bHasOwnProperty(key)) {
+	            return false;
+	        }
+	        var valueA = objA[key];
+	        var valueB = objB[key];
+	
+	        var _ret = compare ? compare.call(compareContext, valueA, valueB, key) : void 0;
+	        if (_ret === false || _ret === void 0 && valueA !== valueB) {
+	            return false;
+	        }
+	    }
+	
+	    return true;
+	};
+
+/***/ },
+/* 205 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * lodash 3.1.2 (Custom Build) <https://lodash.com/>
+	 * Build: `lodash modern modularize exports="npm" -o ./`
+	 * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <https://lodash.com/license>
+	 */
+	var getNative = __webpack_require__(206),
+	    isArguments = __webpack_require__(207),
+	    isArray = __webpack_require__(208);
+	
+	/** Used to detect unsigned integer values. */
+	var reIsUint = /^\d+$/;
+	
+	/** Used for native method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/* Native method references for those with the same name as other `lodash` methods. */
+	var nativeKeys = getNative(Object, 'keys');
+	
+	/**
+	 * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
+	 * of an array-like value.
+	 */
+	var MAX_SAFE_INTEGER = 9007199254740991;
+	
+	/**
+	 * The base implementation of `_.property` without support for deep paths.
+	 *
+	 * @private
+	 * @param {string} key The key of the property to get.
+	 * @returns {Function} Returns the new function.
+	 */
+	function baseProperty(key) {
+	  return function(object) {
+	    return object == null ? undefined : object[key];
+	  };
+	}
+	
+	/**
+	 * Gets the "length" property value of `object`.
+	 *
+	 * **Note:** This function is used to avoid a [JIT bug](https://bugs.webkit.org/show_bug.cgi?id=142792)
+	 * that affects Safari on at least iOS 8.1-8.3 ARM64.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {*} Returns the "length" value.
+	 */
+	var getLength = baseProperty('length');
+	
+	/**
+	 * Checks if `value` is array-like.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+	 */
+	function isArrayLike(value) {
+	  return value != null && isLength(getLength(value));
+	}
+	
+	/**
+	 * Checks if `value` is a valid array-like index.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+	 * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+	 */
+	function isIndex(value, length) {
+	  value = (typeof value == 'number' || reIsUint.test(value)) ? +value : -1;
+	  length = length == null ? MAX_SAFE_INTEGER : length;
+	  return value > -1 && value % 1 == 0 && value < length;
+	}
+	
+	/**
+	 * Checks if `value` is a valid array-like length.
+	 *
+	 * **Note:** This function is based on [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+	 */
+	function isLength(value) {
+	  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+	}
+	
+	/**
+	 * A fallback implementation of `Object.keys` which creates an array of the
+	 * own enumerable property names of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function shimKeys(object) {
+	  var props = keysIn(object),
+	      propsLength = props.length,
+	      length = propsLength && object.length;
+	
+	  var allowIndexes = !!length && isLength(length) &&
+	    (isArray(object) || isArguments(object));
+	
+	  var index = -1,
+	      result = [];
+	
+	  while (++index < propsLength) {
+	    var key = props[index];
+	    if ((allowIndexes && isIndex(key, length)) || hasOwnProperty.call(object, key)) {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+	
+	/**
+	 * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
+	 * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(1);
+	 * // => false
+	 */
+	function isObject(value) {
+	  // Avoid a V8 JIT bug in Chrome 19-20.
+	  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
+	  var type = typeof value;
+	  return !!value && (type == 'object' || type == 'function');
+	}
+	
+	/**
+	 * Creates an array of the own enumerable property names of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects. See the
+	 * [ES spec](http://ecma-international.org/ecma-262/6.0/#sec-object.keys)
+	 * for more details.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.keys(new Foo);
+	 * // => ['a', 'b'] (iteration order is not guaranteed)
+	 *
+	 * _.keys('hi');
+	 * // => ['0', '1']
+	 */
+	var keys = !nativeKeys ? shimKeys : function(object) {
+	  var Ctor = object == null ? undefined : object.constructor;
+	  if ((typeof Ctor == 'function' && Ctor.prototype === object) ||
+	      (typeof object != 'function' && isArrayLike(object))) {
+	    return shimKeys(object);
+	  }
+	  return isObject(object) ? nativeKeys(object) : [];
+	};
+	
+	/**
+	 * Creates an array of the own and inherited enumerable property names of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.keysIn(new Foo);
+	 * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
+	 */
+	function keysIn(object) {
+	  if (object == null) {
+	    return [];
+	  }
+	  if (!isObject(object)) {
+	    object = Object(object);
+	  }
+	  var length = object.length;
+	  length = (length && isLength(length) &&
+	    (isArray(object) || isArguments(object)) && length) || 0;
+	
+	  var Ctor = object.constructor,
+	      index = -1,
+	      isProto = typeof Ctor == 'function' && Ctor.prototype === object,
+	      result = Array(length),
+	      skipIndexes = length > 0;
+	
+	  while (++index < length) {
+	    result[index] = (index + '');
+	  }
+	  for (var key in object) {
+	    if (!(skipIndexes && isIndex(key, length)) &&
+	        !(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = keys;
+
+
+/***/ },
+/* 206 */
+/***/ function(module, exports) {
+
+	/**
+	 * lodash 3.9.1 (Custom Build) <https://lodash.com/>
+	 * Build: `lodash modern modularize exports="npm" -o ./`
+	 * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <https://lodash.com/license>
+	 */
+	
+	/** `Object#toString` result references. */
+	var funcTag = '[object Function]';
+	
+	/** Used to detect host constructors (Safari > 5). */
+	var reIsHostCtor = /^\[object .+?Constructor\]$/;
+	
+	/**
+	 * Checks if `value` is object-like.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+	 */
+	function isObjectLike(value) {
+	  return !!value && typeof value == 'object';
+	}
+	
+	/** Used for native method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to resolve the decompiled source of functions. */
+	var fnToString = Function.prototype.toString;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objToString = objectProto.toString;
+	
+	/** Used to detect if a method is native. */
+	var reIsNative = RegExp('^' +
+	  fnToString.call(hasOwnProperty).replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
+	  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+	);
+	
+	/**
+	 * Gets the native function at `key` of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {string} key The key of the method to get.
+	 * @returns {*} Returns the function if it's native, else `undefined`.
+	 */
+	function getNative(object, key) {
+	  var value = object == null ? undefined : object[key];
+	  return isNative(value) ? value : undefined;
+	}
+	
+	/**
+	 * Checks if `value` is classified as a `Function` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isFunction(_);
+	 * // => true
+	 *
+	 * _.isFunction(/abc/);
+	 * // => false
+	 */
+	function isFunction(value) {
+	  // The use of `Object#toString` avoids issues with the `typeof` operator
+	  // in older versions of Chrome and Safari which return 'function' for regexes
+	  // and Safari 8 equivalents which return 'object' for typed array constructors.
+	  return isObject(value) && objToString.call(value) == funcTag;
+	}
+	
+	/**
+	 * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
+	 * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(1);
+	 * // => false
+	 */
+	function isObject(value) {
+	  // Avoid a V8 JIT bug in Chrome 19-20.
+	  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
+	  var type = typeof value;
+	  return !!value && (type == 'object' || type == 'function');
+	}
+	
+	/**
+	 * Checks if `value` is a native function.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a native function, else `false`.
+	 * @example
+	 *
+	 * _.isNative(Array.prototype.push);
+	 * // => true
+	 *
+	 * _.isNative(_);
+	 * // => false
+	 */
+	function isNative(value) {
+	  if (value == null) {
+	    return false;
+	  }
+	  if (isFunction(value)) {
+	    return reIsNative.test(fnToString.call(value));
+	  }
+	  return isObjectLike(value) && reIsHostCtor.test(value);
+	}
+	
+	module.exports = getNative;
+
+
+/***/ },
+/* 207 */
+/***/ function(module, exports) {
+
+	/**
+	 * lodash (Custom Build) <https://lodash.com/>
+	 * Build: `lodash modularize exports="npm" -o ./`
+	 * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+	 * Released under MIT license <https://lodash.com/license>
+	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+	 * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 */
+	
+	/** Used as references for various `Number` constants. */
+	var MAX_SAFE_INTEGER = 9007199254740991;
+	
+	/** `Object#toString` result references. */
+	var argsTag = '[object Arguments]',
+	    funcTag = '[object Function]',
+	    genTag = '[object GeneratorFunction]';
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Used to resolve the
+	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/** Built-in value references. */
+	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+	
+	/**
+	 * Checks if `value` is likely an `arguments` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+	 *  else `false`.
+	 * @example
+	 *
+	 * _.isArguments(function() { return arguments; }());
+	 * // => true
+	 *
+	 * _.isArguments([1, 2, 3]);
+	 * // => false
+	 */
+	function isArguments(value) {
+	  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+	  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
+	    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+	}
+	
+	/**
+	 * Checks if `value` is array-like. A value is considered array-like if it's
+	 * not a function and has a `value.length` that's an integer greater than or
+	 * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+	 * @example
+	 *
+	 * _.isArrayLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArrayLike(document.body.children);
+	 * // => true
+	 *
+	 * _.isArrayLike('abc');
+	 * // => true
+	 *
+	 * _.isArrayLike(_.noop);
+	 * // => false
+	 */
+	function isArrayLike(value) {
+	  return value != null && isLength(value.length) && !isFunction(value);
+	}
+	
+	/**
+	 * This method is like `_.isArrayLike` except that it also checks if `value`
+	 * is an object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an array-like object,
+	 *  else `false`.
+	 * @example
+	 *
+	 * _.isArrayLikeObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArrayLikeObject(document.body.children);
+	 * // => true
+	 *
+	 * _.isArrayLikeObject('abc');
+	 * // => false
+	 *
+	 * _.isArrayLikeObject(_.noop);
+	 * // => false
+	 */
+	function isArrayLikeObject(value) {
+	  return isObjectLike(value) && isArrayLike(value);
+	}
+	
+	/**
+	 * Checks if `value` is classified as a `Function` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+	 * @example
+	 *
+	 * _.isFunction(_);
+	 * // => true
+	 *
+	 * _.isFunction(/abc/);
+	 * // => false
+	 */
+	function isFunction(value) {
+	  // The use of `Object#toString` avoids issues with the `typeof` operator
+	  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+	  var tag = isObject(value) ? objectToString.call(value) : '';
+	  return tag == funcTag || tag == genTag;
+	}
+	
+	/**
+	 * Checks if `value` is a valid array-like length.
+	 *
+	 * **Note:** This method is loosely based on
+	 * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+	 * @example
+	 *
+	 * _.isLength(3);
+	 * // => true
+	 *
+	 * _.isLength(Number.MIN_VALUE);
+	 * // => false
+	 *
+	 * _.isLength(Infinity);
+	 * // => false
+	 *
+	 * _.isLength('3');
+	 * // => false
+	 */
+	function isLength(value) {
+	  return typeof value == 'number' &&
+	    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+	}
+	
+	/**
+	 * Checks if `value` is the
+	 * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+	 * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(_.noop);
+	 * // => true
+	 *
+	 * _.isObject(null);
+	 * // => false
+	 */
+	function isObject(value) {
+	  var type = typeof value;
+	  return !!value && (type == 'object' || type == 'function');
+	}
+	
+	/**
+	 * Checks if `value` is object-like. A value is object-like if it's not `null`
+	 * and has a `typeof` result of "object".
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+	 * @example
+	 *
+	 * _.isObjectLike({});
+	 * // => true
+	 *
+	 * _.isObjectLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObjectLike(_.noop);
+	 * // => false
+	 *
+	 * _.isObjectLike(null);
+	 * // => false
+	 */
+	function isObjectLike(value) {
+	  return !!value && typeof value == 'object';
+	}
+	
+	module.exports = isArguments;
+
+
+/***/ },
+/* 208 */
+/***/ function(module, exports) {
+
+	/**
+	 * lodash 3.0.4 (Custom Build) <https://lodash.com/>
+	 * Build: `lodash modern modularize exports="npm" -o ./`
+	 * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 * Available under MIT license <https://lodash.com/license>
+	 */
+	
+	/** `Object#toString` result references. */
+	var arrayTag = '[object Array]',
+	    funcTag = '[object Function]';
+	
+	/** Used to detect host constructors (Safari > 5). */
+	var reIsHostCtor = /^\[object .+?Constructor\]$/;
+	
+	/**
+	 * Checks if `value` is object-like.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+	 */
+	function isObjectLike(value) {
+	  return !!value && typeof value == 'object';
+	}
+	
+	/** Used for native method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to resolve the decompiled source of functions. */
+	var fnToString = Function.prototype.toString;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objToString = objectProto.toString;
+	
+	/** Used to detect if a method is native. */
+	var reIsNative = RegExp('^' +
+	  fnToString.call(hasOwnProperty).replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
+	  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+	);
+	
+	/* Native method references for those with the same name as other `lodash` methods. */
+	var nativeIsArray = getNative(Array, 'isArray');
+	
+	/**
+	 * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
+	 * of an array-like value.
+	 */
+	var MAX_SAFE_INTEGER = 9007199254740991;
+	
+	/**
+	 * Gets the native function at `key` of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {string} key The key of the method to get.
+	 * @returns {*} Returns the function if it's native, else `undefined`.
+	 */
+	function getNative(object, key) {
+	  var value = object == null ? undefined : object[key];
+	  return isNative(value) ? value : undefined;
+	}
+	
+	/**
+	 * Checks if `value` is a valid array-like length.
+	 *
+	 * **Note:** This function is based on [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+	 */
+	function isLength(value) {
+	  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+	}
+	
+	/**
+	 * Checks if `value` is classified as an `Array` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isArray([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArray(function() { return arguments; }());
+	 * // => false
+	 */
+	var isArray = nativeIsArray || function(value) {
+	  return isObjectLike(value) && isLength(value.length) && objToString.call(value) == arrayTag;
+	};
+	
+	/**
+	 * Checks if `value` is classified as a `Function` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isFunction(_);
+	 * // => true
+	 *
+	 * _.isFunction(/abc/);
+	 * // => false
+	 */
+	function isFunction(value) {
+	  // The use of `Object#toString` avoids issues with the `typeof` operator
+	  // in older versions of Chrome and Safari which return 'function' for regexes
+	  // and Safari 8 equivalents which return 'object' for typed array constructors.
+	  return isObject(value) && objToString.call(value) == funcTag;
+	}
+	
+	/**
+	 * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
+	 * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(1);
+	 * // => false
+	 */
+	function isObject(value) {
+	  // Avoid a V8 JIT bug in Chrome 19-20.
+	  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
+	  var type = typeof value;
+	  return !!value && (type == 'object' || type == 'function');
+	}
+	
+	/**
+	 * Checks if `value` is a native function.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a native function, else `false`.
+	 * @example
+	 *
+	 * _.isNative(Array.prototype.push);
+	 * // => true
+	 *
+	 * _.isNative(_);
+	 * // => false
+	 */
+	function isNative(value) {
+	  if (value == null) {
+	    return false;
+	  }
+	  if (isFunction(value)) {
+	    return reIsNative.test(fnToString.call(value));
+	  }
+	  return isObjectLike(value) && reIsHostCtor.test(value);
+	}
+	
+	module.exports = isArray;
+
+
+/***/ },
+/* 209 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var pSlice = Array.prototype.slice;
+	var objectKeys = __webpack_require__(210);
+	var isArguments = __webpack_require__(211);
+	
+	var deepEqual = module.exports = function (actual, expected, opts) {
+	  if (!opts) opts = {};
+	  // 7.1. All identical values are equivalent, as determined by ===.
+	  if (actual === expected) {
+	    return true;
+	
+	  } else if (actual instanceof Date && expected instanceof Date) {
+	    return actual.getTime() === expected.getTime();
+	
+	  // 7.3. Other pairs that do not both pass typeof value == 'object',
+	  // equivalence is determined by ==.
+	  } else if (!actual || !expected || typeof actual != 'object' && typeof expected != 'object') {
+	    return opts.strict ? actual === expected : actual == expected;
+	
+	  // 7.4. For all other Object pairs, including Array objects, equivalence is
+	  // determined by having the same number of owned properties (as verified
+	  // with Object.prototype.hasOwnProperty.call), the same set of keys
+	  // (although not necessarily the same order), equivalent values for every
+	  // corresponding key, and an identical 'prototype' property. Note: this
+	  // accounts for both named and indexed properties on Arrays.
+	  } else {
+	    return objEquiv(actual, expected, opts);
+	  }
+	}
+	
+	function isUndefinedOrNull(value) {
+	  return value === null || value === undefined;
+	}
+	
+	function isBuffer (x) {
+	  if (!x || typeof x !== 'object' || typeof x.length !== 'number') return false;
+	  if (typeof x.copy !== 'function' || typeof x.slice !== 'function') {
+	    return false;
+	  }
+	  if (x.length > 0 && typeof x[0] !== 'number') return false;
+	  return true;
+	}
+	
+	function objEquiv(a, b, opts) {
+	  var i, key;
+	  if (isUndefinedOrNull(a) || isUndefinedOrNull(b))
+	    return false;
+	  // an identical 'prototype' property.
+	  if (a.prototype !== b.prototype) return false;
+	  //~~~I've managed to break Object.keys through screwy arguments passing.
+	  //   Converting to array solves the problem.
+	  if (isArguments(a)) {
+	    if (!isArguments(b)) {
+	      return false;
+	    }
+	    a = pSlice.call(a);
+	    b = pSlice.call(b);
+	    return deepEqual(a, b, opts);
+	  }
+	  if (isBuffer(a)) {
+	    if (!isBuffer(b)) {
+	      return false;
+	    }
+	    if (a.length !== b.length) return false;
+	    for (i = 0; i < a.length; i++) {
+	      if (a[i] !== b[i]) return false;
+	    }
+	    return true;
+	  }
+	  try {
+	    var ka = objectKeys(a),
+	        kb = objectKeys(b);
+	  } catch (e) {//happens when one is a string literal and the other isn't
+	    return false;
+	  }
+	  // having the same number of owned properties (keys incorporates
+	  // hasOwnProperty)
+	  if (ka.length != kb.length)
+	    return false;
+	  //the same set of keys (although not necessarily the same order),
+	  ka.sort();
+	  kb.sort();
+	  //~~~cheap key test
+	  for (i = ka.length - 1; i >= 0; i--) {
+	    if (ka[i] != kb[i])
+	      return false;
+	  }
+	  //equivalent values for every corresponding key, and
+	  //~~~possibly expensive deep test
+	  for (i = ka.length - 1; i >= 0; i--) {
+	    key = ka[i];
+	    if (!deepEqual(a[key], b[key], opts)) return false;
+	  }
+	  return typeof a === typeof b;
+	}
+
+
+/***/ },
+/* 210 */
+/***/ function(module, exports) {
+
+	exports = module.exports = typeof Object.keys === 'function'
+	  ? Object.keys : shim;
+	
+	exports.shim = shim;
+	function shim (obj) {
+	  var keys = [];
+	  for (var key in obj) keys.push(key);
+	  return keys;
+	}
+
+
+/***/ },
+/* 211 */
+/***/ function(module, exports) {
+
+	var supportsArgumentsClass = (function(){
+	  return Object.prototype.toString.call(arguments)
+	})() == '[object Arguments]';
+	
+	exports = module.exports = supportsArgumentsClass ? supported : unsupported;
+	
+	exports.supported = supported;
+	function supported(object) {
+	  return Object.prototype.toString.call(object) == '[object Arguments]';
+	};
+	
+	exports.unsupported = unsupported;
+	function unsupported(object){
+	  return object &&
+	    typeof object == 'object' &&
+	    typeof object.length == 'number' &&
+	    Object.prototype.hasOwnProperty.call(object, 'callee') &&
+	    !Object.prototype.propertyIsEnumerable.call(object, 'callee') ||
+	    false;
+	};
+
+
+/***/ },
+/* 212 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
