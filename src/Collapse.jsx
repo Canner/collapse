@@ -122,7 +122,7 @@ const Collapse = React.createClass({
     const { prefixCls, accordion, drag, onDrag, dragStart, dragStop } = this.props;
     const newChildren = [];
 
-    Children.forEach(children || (this.state && this.state.children) || children, (child, index) => { // eslint-disable-line max-len
+    Children.forEach(children || (this.state && this.state.children) || this.props.children, (child, index) => { // eslint-disable-line max-len
       if (!child) return;
       // If there is no key provide, use the panel order as default key
       const key = child.key || String(index);
