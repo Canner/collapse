@@ -93,7 +93,7 @@ const Collapse = React.createClass({
       || !deepEqual(nextProps.cannerJSON, this.props.cannerJSON)
     ) {
       this.setState({
-        children: this.getItems(nextState.activeKey, nextState.openAnimation),
+        children: this.getItems(nextState.activeKey, nextState.openAnimation, nextProps.children),
       });
     }
   },
@@ -118,11 +118,11 @@ const Collapse = React.createClass({
     };
   },
 
-  getItems(activeKey, openAnimation) {
-    const { prefixCls, children, accordion, drag, onDrag, dragStart, dragStop } = this.props;
+  getItems(activeKey, openAnimation, children) {
+    const { prefixCls, accordion, drag, onDrag, dragStart, dragStop } = this.props;
     const newChildren = [];
 
-    Children.forEach(this.state && this.state.children || children, (child, index) => {
+    Children.forEach(children || (this.state && this.state.children) || children, (child, index) => { // eslint-disable-line max-len
       if (!child) return;
       // If there is no key provide, use the panel order as default key
       const key = child.key || String(index);
