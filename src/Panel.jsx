@@ -28,6 +28,7 @@ const CollapsePanel = React.createClass({
     ]),
     isActive: PropTypes.bool,
     setActiveKey: PropTypes.func,
+    activeKey: PropTypes.array,
     onItemClick: PropTypes.func,
   },
 
@@ -54,6 +55,13 @@ const CollapsePanel = React.createClass({
     // handle drag start
     e.preventDefault();
     e.stopPropagation();
+    const { setActiveKey, activeKey } = this.props;
+
+    if (activeKey.length > 0) {
+      setActiveKey([]);
+      return false;
+    }
+
     this.translateY = 0;
     this.setState({
       dragging: true,
@@ -63,7 +71,6 @@ const CollapsePanel = React.createClass({
 
   handleDrag(e, data) {
     // handle dragging
-    this.props.setActiveKey([]);
     const { swapPanel } = this.props;
     const { deltaY } = data;
     const parentNode = data.node.parentNode;

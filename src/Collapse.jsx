@@ -144,6 +144,7 @@ const Collapse = React.createClass({
         dragStop,
         dragStart,
         openAnimation,
+        activeKey,
         dataKey: key,
         setActiveKey: this.setActiveKey,
         swapPanel: this.swapPanel,
@@ -158,9 +159,7 @@ const Collapse = React.createClass({
   },
 
   setActiveKey(activeKey) {
-    if (!('activeKey' in this.props)) {
-      this.setState({ activeKey });
-    }
+    this.setState({ activeKey });
     this.props.onChange(this.props.accordion ? activeKey[0] : activeKey);
   },
 
