@@ -489,7 +489,8 @@ webpackJsonp([0,1],[
 	      newChildren[toIndex] = tmp;
 	      this.props.onSwap(fromIndex, toIndex);
 	      this.setState({
-	        children: newChildren
+	        children: newChildren,
+	        activeKey: []
 	      });
 	    }
 	  },
