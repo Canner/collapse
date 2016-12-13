@@ -178,6 +178,7 @@ const Collapse = React.createClass({
       this.props.onSwap(fromIndex, toIndex);
       this.setState({
         children: newChildren,
+        activeKey: [],
       });
     }
   },
