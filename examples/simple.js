@@ -430,7 +430,7 @@ webpackJsonp([0,1],[
 	
 	    var newChildren = [];
 	
-	    _react.Children.forEach(children || this.state && this.state.children || children, function (child, index) {
+	    _react.Children.forEach(children || this.state && this.state.children || this.props.children, function (child, index) {
 	      // eslint-disable-line max-len
 	      if (!child) return;
 	      // If there is no key provide, use the panel order as default key
