@@ -3,6 +3,7 @@ import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
 import classNames from 'classnames';
 import shallowEqual from 'shallowequal';
+import deepEqual from 'deep-equal';
 import { childrenEqual } from './utils';
 
 function toArray(activeKey) {
@@ -35,6 +36,7 @@ const Collapse = React.createClass({
     className: PropTypes.string,
     style: PropTypes.object,
     onSwap: PropTypes.func,
+    cannerJSON: PropTypes.object,
   },
 
   statics: {
@@ -72,12 +74,12 @@ const Collapse = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if ('activeKey' in nextProps) {
+    if (!shallowEqual(nextProps.activeKey, this.props.activeKey)) {
       this.setState({
         activeKey: toArray(nextProps.activeKey),
       });
     }
-    if ('openAnimation' in nextProps) {
+    if (!shallowEqual(nextProps.openAnimation, this.props.openAnimation)) {
       this.setState({
         openAnimation: nextProps.openAnimation,
       });
@@ -86,10 +88,9 @@ const Collapse = React.createClass({
 
   componentWillUpdate(nextProps, nextState) {
     if (
-      !shallowEqual(nextProps, this.props)
-      || !shallowEqual(nextState.activeKey, this.state.activeKey)
-      || !shallowEqual(nextState.openAnimation, this.state.openAnimation)
+      !shallowEqual(nextState.activeKey, this.state.activeKey)
       || !childrenEqual(this.props.children, nextProps.children)
+      || !deepEqual(nextProps.cannerJSON, this.props.cannerJSON)
     ) {
       this.setState({
         children: this.getItems(nextState.activeKey, nextState.openAnimation),
@@ -164,22 +165,21 @@ const Collapse = React.createClass({
   },
 
   swapPanel(fromKey, toKey) {
-    const { children } = this.state;
-    // create new array for children.
-    const newChildren = children.slice();
-
     if (fromKey && toKey) {
+      const { children } = this.state;
+      // create new array for children.
+      const newChildren = children.slice();
+
       const fromIndex = children.findIndex((child) => child.props.dataKey === fromKey);
       const toIndex = children.findIndex((child) => child.props.dataKey === toKey);
       const tmp = newChildren[fromIndex];
       newChildren[fromIndex] = newChildren[toIndex];
       newChildren[toIndex] = tmp;
       this.props.onSwap(fromIndex, toIndex);
+      this.setState({
+        children: newChildren,
+      });
     }
-
-    this.setState({
-      children: newChildren,
-    });
   },
 
   render() {
