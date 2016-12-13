@@ -453,6 +453,7 @@ webpackJsonp([0,1],[
 	        dragStop: dragStop,
 	        dragStart: dragStart,
 	        openAnimation: openAnimation,
+	        activeKey: activeKey,
 	        dataKey: key,
 	        setActiveKey: _this2.setActiveKey,
 	        swapPanel: _this2.swapPanel,
@@ -466,9 +467,7 @@ webpackJsonp([0,1],[
 	    return newChildren;
 	  },
 	  setActiveKey: function setActiveKey(activeKey) {
-	    if (!('activeKey' in this.props)) {
-	      this.setState({ activeKey: activeKey });
-	    }
+	    this.setState({ activeKey: activeKey });
 	    this.props.onChange(this.props.accordion ? activeKey[0] : activeKey);
 	  },
 	  swapPanel: function swapPanel(fromKey, toKey) {
@@ -4481,6 +4480,7 @@ webpackJsonp([0,1],[
 	    header: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number, _react.PropTypes.node]),
 	    isActive: _react.PropTypes.bool,
 	    setActiveKey: _react.PropTypes.func,
+	    activeKey: _react.PropTypes.array,
 	    onItemClick: _react.PropTypes.func
 	  },
 	
@@ -4503,6 +4503,16 @@ webpackJsonp([0,1],[
 	    // handle drag start
 	    e.preventDefault();
 	    e.stopPropagation();
+	    var _props = this.props,
+	        setActiveKey = _props.setActiveKey,
+	        activeKey = _props.activeKey;
+	
+	
+	    if (activeKey.length > 0) {
+	      setActiveKey([]);
+	      return false;
+	    }
+	
 	    this.translateY = 0;
 	    this.setState({
 	      dragging: true
@@ -4511,7 +4521,6 @@ webpackJsonp([0,1],[
 	  },
 	  handleDrag: function handleDrag(e, data) {
 	    // handle dragging
-	    this.props.setActiveKey([]);
 	    var swapPanel = this.props.swapPanel;
 	    var deltaY = data.deltaY;
 	
@@ -4555,14 +4564,14 @@ webpackJsonp([0,1],[
 	  render: function render() {
 	    var _classNames;
 	
-	    var _props = this.props,
-	        className = _props.className,
-	        prefixCls = _props.prefixCls,
-	        header = _props.header,
-	        children = _props.children,
-	        isActive = _props.isActive,
-	        drag = _props.drag,
-	        dataKey = _props.dataKey;
+	    var _props2 = this.props,
+	        className = _props2.className,
+	        prefixCls = _props2.prefixCls,
+	        header = _props2.header,
+	        children = _props2.children,
+	        isActive = _props2.isActive,
+	        drag = _props2.drag,
+	        dataKey = _props2.dataKey;
 	
 	    var headerCls = prefixCls + '-header';
 	    var itemCls = (0, _classnames2.default)((_classNames = {}, _defineProperty(_classNames, prefixCls + '-item', true), _defineProperty(_classNames, prefixCls + '-item-active', isActive), _defineProperty(_classNames, className, className), _classNames));
