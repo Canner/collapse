@@ -392,7 +392,7 @@ webpackJsonp([0,1],[
 	  componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
 	    if (!(0, _shallowequal2.default)(nextState.activeKey, this.state.activeKey) || !(0, _utils.childrenEqual)(this.props.children, nextProps.children) || !(0, _deepEqual2.default)(nextProps.cannerJSON, this.props.cannerJSON)) {
 	      this.setState({
-	        children: this.getItems(nextState.activeKey, nextState.openAnimation)
+	        children: this.getItems(nextState.activeKey, nextState.openAnimation, nextProps.children)
 	      });
 	    }
 	  },
@@ -417,12 +417,11 @@ webpackJsonp([0,1],[
 	      _this.setActiveKey(activeKey);
 	    };
 	  },
-	  getItems: function getItems(activeKey, openAnimation) {
+	  getItems: function getItems(activeKey, openAnimation, children) {
 	    var _this2 = this;
 	
 	    var _props = this.props,
 	        prefixCls = _props.prefixCls,
-	        children = _props.children,
 	        accordion = _props.accordion,
 	        drag = _props.drag,
 	        onDrag = _props.onDrag,
@@ -431,7 +430,8 @@ webpackJsonp([0,1],[
 	
 	    var newChildren = [];
 	
-	    _react.Children.forEach(this.state && this.state.children || children, function (child, index) {
+	    _react.Children.forEach(children || this.state && this.state.children || children, function (child, index) {
+	      // eslint-disable-line max-len
 	      if (!child) return;
 	      // If there is no key provide, use the panel order as default key
 	      var key = child.key || String(index);
