@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { DraggableCore } from 'react-draggable';
@@ -7,7 +8,7 @@ import { createCSSTransform } from './utils';
 import Animate from 'rc-animate';
 import SwapVertical from 'react-icons/lib/md/swap-vert';
 
-const CollapsePanel = React.createClass({
+const CollapsePanel = createReactClass({
   propTypes: {
     dataKey: PropTypes.string,
     drag: PropTypes.bool,

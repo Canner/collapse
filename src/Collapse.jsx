@@ -1,4 +1,6 @@
+
 import React, { Children }from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
@@ -15,7 +17,7 @@ function toArray(activeKey) {
   return currentActiveKey;
 }
 
-const Collapse = React.createClass({
+const Collapse = createReactClass({
   propTypes: {
     drag: PropTypes.bool,
     dragStart: PropTypes.func,

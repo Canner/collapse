@@ -55,6 +55,7 @@
   ],
   "dependencies": {
     "classnames": "2.x",
+    "create-react-class": "^15.6.3",
     "css-animation": "1.x",
     "deep-equal": "^1.0.1",
     "lodash.isequal": "^4.4.0",
