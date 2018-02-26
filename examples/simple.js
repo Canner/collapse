@@ -341,7 +341,7 @@ webpackJsonp([0,1],[
 	    className: _propTypes2.default.string,
 	    style: _propTypes2.default.object,
 	    onSwap: _propTypes2.default.func,
-	    cannerJSON: _propTypes2.default.object
+	    value: _propTypes2.default.object
 	  },
 	
 	  statics: {
@@ -398,7 +398,7 @@ webpackJsonp([0,1],[
 	    }
 	  },
 	  componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
-	    if (!(0, _shallowequal2.default)(nextState.activeKey, this.state.activeKey) || !(0, _utils.childrenEqual)(this.props.children, nextProps.children) || !(0, _deepEqual2.default)(nextProps.cannerJSON, this.props.cannerJSON)) {
+	    if (!(0, _shallowequal2.default)(nextState.activeKey, this.state.activeKey) || !(0, _utils.childrenEqual)(this.props.children, nextProps.children) || !(0, _deepEqual2.default)(nextProps.value, this.props.value)) {
 	      this.setState({
 	        children: this.getItems(nextState.activeKey, nextState.openAnimation, nextProps.children)
 	      });
