@@ -39,7 +39,7 @@ const Collapse = createReactClass({
     className: PropTypes.string,
     style: PropTypes.object,
     onSwap: PropTypes.func,
-    cannerJSON: PropTypes.object,
+    value: PropTypes.object,
   },
 
   statics: {
@@ -93,7 +93,7 @@ const Collapse = createReactClass({
     if (
       !shallowEqual(nextState.activeKey, this.state.activeKey)
       || !childrenEqual(this.props.children, nextProps.children)
-      || !deepEqual(nextProps.cannerJSON, this.props.cannerJSON)
+      || !deepEqual(nextProps.value, this.props.value)
     ) {
       this.setState({
         children: this.getItems(nextState.activeKey, nextState.openAnimation, nextProps.children),
